@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery</title>
+  {% include '../base.html' %}
+</head>
+<body>
+  <div class="container">
+  <div class="gallary-content">
+    <div class="d-flex justify-content-between">
+      <h2 class="title">Latest Photos</h2>
+      <a href="users/logout"> <button  type="submit" class=" btn btn-primary">logout</button></a>
+    </div>
+    <div class="mb-3">
+    <form action="/" method="POST" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% for field in data.upload_form %}
+        <div class="form-group">
+          <label>{{ field.label }}</label>
+          {{ field }}
+        </div>
+        {{ field.errors }}
+      {% endfor %}
+      <div class="d-flex justify-content-center" width="100%"><button  type="submit" class=" btn btn-primary">Submit</button></div> 
+    </form>
+  </div>
+  
+    <div class="photo-gallery pt-5">
+      <div class="container">
+          
+          <div class="row photos">
+            {% for image in  data.images.object_list %}
+        
+            <div class="col-sm-6 col-md-4 col-lg-3 item">
+              <a href="{{ image.image.url }}" data-lightbox="photos"><img class="img-fluid" src="{{ image.image.url }}"></a></div>
+              
+            {% endfor %}
+                        
+          </div>
+      </div>
+      
+  </div> 
+    
+  <div class="d-flex justify-content-center">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="?page={{page_obj.previous_page_number}}">Previous</a></li>
+        <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+        <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+        <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{page_obj.next_page_number}}">Next</a></li>
+      </ul>
+    </nav>
+  </div>
+  </div>
+
+</body>
+</html>
